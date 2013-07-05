@@ -20,13 +20,21 @@ sub personaje_var_set_get : Test(1) {
   is($p->var('atributo1'),'valor1');
 }
 
-sub del : Test(1){
+sub personaje_del : Test(1){
   my $self = shift;
   my $p = Personaje->new();
   $p->var('atributo1','valor1');
   $p->del('atributo1');
   is($p->var('atributo1'),undef);
 
+}
+
+sub personaje_var_autoload : Test(2) {
+  my $self = shift;
+  my $p = Personaje->new();
+  $p->atributo1('valor1');
+  is($p->atributo1, 'valor1');
+  is($p->var('atributo1'),'valor1');
 }
 
 1;

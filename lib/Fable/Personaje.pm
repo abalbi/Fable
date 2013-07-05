@@ -1,5 +1,7 @@
 package Personaje;
 use fields qw(_vars);
+our $AUTOLOAD;
+
 sub new {
   my $self = shift;
   unless (ref $self) {
@@ -22,5 +24,14 @@ sub del {
   my $self = shift;
   my $var = shift;
   return delete $self->{_vars}->{$var};
+}
+
+sub AUTOLOAD {
+  my $self = shift;
+  my $val = shift;
+  my $var = $AUTOLOAD;
+  $var =~ s/.*://;   # strip fully-qualified portion
+  return if $var =~ /DESTROY/;
+  return $self->var($var,$val);
 }
 1;
